@@ -1,10 +1,11 @@
 package ru.job4j.tracker.oop;
 
-import junit.framework.TestCase;
 import org.junit.Assert;
+import org.junit.Test;
 
-public class DummyDicTest extends TestCase {
+public class DummyDicTest {
 
+    @Test
     public void testEngToRus() {
         String eng = "Holiday";
         String rsl = new DummyDic().engToRus(eng);
