@@ -16,8 +16,8 @@ public class PointTest {
 
     @Test
     public void when11To11ThenDistance0Dot0() {
-        Point a = new Point(0, 0);
-        Point b = new Point(0, 0);
+        Point a = new Point(1, 1);
+        Point b = new Point(1, 1);
         double rsl = a.distance(b);
         double exp = 0.0;
         Assert.assertEquals(exp, rsl, 0.01);
