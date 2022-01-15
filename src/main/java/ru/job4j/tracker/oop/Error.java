@@ -1,9 +1,9 @@
 package ru.job4j.tracker.oop;
 
 public class Error {
-    boolean active;
-    int status;
-    String massage;
+    private boolean active;
+    private int status;
+    private String massage;
 
     public Error() {
     }
