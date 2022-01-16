@@ -31,4 +31,31 @@ public class PointTest {
         double exp = 2.82;
         Assert.assertEquals(exp, rsl, 0.01);
     }
+
+    @Test
+    public void when000To111ThenDistance3D1Dot41() {
+        Point a = new Point(0, 0, 0);
+        Point b = new Point(1, 1, 1);
+        double rsl = a.distance3d(b);
+        double exp = 1.73;
+        Assert.assertEquals(exp, rsl, 0.01);
+    }
+
+    @Test
+    public void when111To111ThenDistance3D0Dot0() {
+        Point a = new Point(1, 1, 1);
+        Point b = new Point(1, 1, 1);
+        double rsl = a.distance3d(b);
+        double exp = 0.0;
+        Assert.assertEquals(exp, rsl, 0.01);
+    }
+
+    @Test
+    public void when234To567ThenDistance3D2Dot82() {
+        Point a = new Point(2, 3, 4);
+        Point b = new Point(5, 6, 7);
+        double rsl = a.distance3d(b);
+        double exp = 5.19;
+        Assert.assertEquals(exp, rsl, 0.01);
+    }
 }
