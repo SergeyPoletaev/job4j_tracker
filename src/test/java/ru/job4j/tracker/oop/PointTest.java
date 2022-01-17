@@ -51,7 +51,7 @@ public class PointTest {
     }
 
     @Test
-    public void when234To567ThenDistance3D2Dot82() {
+    public void when234To567ThenDistance3D5Dot19() {
         Point a = new Point(2, 3, 4);
         Point b = new Point(5, 6, 7);
         double rsl = a.distance3d(b);
