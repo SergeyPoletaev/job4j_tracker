@@ -36,11 +36,25 @@ public class Tracker {
     }
 
     public Item findById(int id) {
-        Item rsl = null;
+        int index = indexOf(id);
+        return index != -1 ? items[index] : null;
+    }
+
+    public boolean replace(int id, Item item) {
+        boolean rsl = false;
+        int index = indexOf(id);
+        if (index != -1) {
+            items[index].setName(item.getName());
+            rsl = true;
+        }
+        return rsl;
+    }
+
+    private int indexOf(int id) {
+        int rsl = -1;
         for (int i = 0; i < size; i++) {
-            Item item = items[i];
-            if (item.getId() == id) {
-                rsl = item;
+            if (id == items[i].getId()) {
+                rsl = i;
                 break;
             }
         }
