@@ -1,4 +1,4 @@
-package pojo;
+package ru.job4j.tracker.pojo;
 
 public class Product {
     private String name;

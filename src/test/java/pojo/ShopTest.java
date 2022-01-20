@@ -2,6 +2,8 @@ package pojo;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.job4j.tracker.pojo.Product;
+import ru.job4j.tracker.pojo.Shop;
 
 public class ShopTest {
 

@@ -1,6 +1,7 @@
 package pojo;
 
 import org.junit.Test;
+import ru.job4j.tracker.pojo.License;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

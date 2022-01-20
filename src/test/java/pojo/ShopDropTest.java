@@ -1,6 +1,8 @@
 package pojo;
 
 import org.junit.Test;
+import ru.job4j.tracker.pojo.Product;
+import ru.job4j.tracker.pojo.ShopDrop;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
