@@ -11,10 +11,14 @@ public class Matches {
         int count = 11;
         while (count > 0) {
             String player = turn ? "Первый игрок" : "Второй игрок";
-            System.out.println(player + " введите число от 1 до 3:");
+            System.out.println(player + " введите число от 1 до 3: ");
             int matches = Integer.parseInt(input.nextLine());
+            while (matches < 1 || matches > 3 || matches > count) {
+                System.out.println("Неверные данные. Ввведите корретное число спичек");
+                matches = Integer.parseInt(input.nextLine());
+            }
             turn = !turn;
-            count = Math.max(count - matches, 0);
+            count -= matches;
             System.out.println("На столе осталось " + count + " спичек");
         }
         if (!turn) {
