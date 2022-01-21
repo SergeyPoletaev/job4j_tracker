@@ -15,4 +15,25 @@ public class StartUITest {
         Item expected = new Item("test1");
         Assert.assertEquals(expected.getName(), created.getName());
     }
+
+    @Test
+    public void whenEditItem() {
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        tracker.add(item);
+        String[] answers = {String.valueOf(item.getId()), "edit item"};
+        StartUI.editItem(new StubInput(answers), tracker);
+        Item edited = tracker.findById(item.getId());
+        Assert.assertEquals("edit item", edited.getName());
+    }
+
+    @Test
+    public void whenDeleteItem() {
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        tracker.add(item);
+        String[] answers = {String.valueOf(item.getId())};
+        StartUI.deleteItem(new StubInput(answers), tracker);
+        Assert.assertNull(tracker.findById(item.getId()));
+    }
 }
