@@ -1,6 +1,8 @@
 package ru.job4j.tracker.poly;
 
-public class Bus implements Transport {
+public class Bus implements Transport, Vehicle {
+    private static final double TAX = 8.22;
+
     @Override
     public void drive() {
         System.out.println("Bus goes ...");
@@ -15,5 +17,15 @@ public class Bus implements Transport {
     public double fill(double fuel) {
         double price = 51.25;
         return fuel * price;
+    }
+
+    @Override
+    public void move() {
+        System.out.println(getClass().getSimpleName() + " moves through high-speed tracks");
+    }
+
+    @Override
+    public double profit(int flight) {
+        return TAX * flight;
     }
 }
