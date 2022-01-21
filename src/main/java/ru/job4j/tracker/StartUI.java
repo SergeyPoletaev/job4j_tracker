@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 public class StartUI {
 
+    @SuppressWarnings("checkstyle:MethodLength")
     public void init(Input input, Tracker tracker) {
         boolean run = true;
         while (run) {
