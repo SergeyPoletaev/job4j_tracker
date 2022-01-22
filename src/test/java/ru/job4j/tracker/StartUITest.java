@@ -264,7 +264,6 @@ public class StartUITest {
     public void whenFindByIdTestOutputIsFailure() {
         Output out = new StubOutput();
         Tracker tracker = new Tracker();
-//        Item one = tracker.add(new Item("test"));
         String searchingId = "1";
         String[] answer = {"0", searchingId, "1"};
         Input input = new StubInput(answer);
