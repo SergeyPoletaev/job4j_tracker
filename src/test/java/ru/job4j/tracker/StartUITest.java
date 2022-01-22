@@ -73,4 +73,217 @@ public class StartUITest {
                         + "=== Exit program ===" + System.lineSeparator()
         ));
     }
+
+    @Test
+    public void whenEditItemTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        String replaceName = "New Test Name";
+        Input in = new StubInput(
+                new String[]{"0", String.valueOf(one.getId()), replaceName, "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new EditAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu." + ln
+                        + "0. Edit item" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Edit item ===" + ln
+                        + "Заявка изменена успешно" + ln
+                        + "Menu." + ln
+                        + "0. Edit item" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenEditItemTestOutputIsFailure() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        String replaceName = "New Test Name";
+        Input in = new StubInput(
+                new String[]{"0", "1", replaceName, "1"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new EditAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu." + ln
+                        + "0. Edit item" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Edit item ===" + ln
+                        + "Ошибка замены заявки" + ln
+                        + "Menu." + ln
+                        + "0. Edit item" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenShowAllTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test"));
+        String[] answers = {"0", "1"};
+        Input input = new StubInput(answers);
+        UserAction[] actions = {
+                new ShowAllAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu." + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Show all items ===" + ln
+                        + one + ln
+                        + "Menu." + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenShowAllTestOutputIsFailure() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        String[] answers = {"0", "1"};
+        Input input = new StubInput(answers);
+        UserAction[] actions = {
+                new ShowAllAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu." + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Show all items ===" + ln
+                        + "Хранилище еще не содержит заявок" + ln
+                        + "Menu." + ln
+                        + "0. Show all items" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindByNameTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test"));
+        String searchingName = "test";
+        String[] answer = {"0", searchingName, "1"};
+        Input input = new StubInput(answer);
+        UserAction[] actions = {
+                new FindItemsByNameAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu." + ln
+                        + "0. Find items by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find items by name ===" + ln
+                        + one + ln
+                        + "Menu." + ln
+                        + "0. Find items by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindByNameTestOutputIsFailure() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        String searchingName = "test";
+        String[] answer = {"0", searchingName, "1"};
+        Input input = new StubInput(answer);
+        UserAction[] actions = {
+                new FindItemsByNameAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu." + ln
+                        + "0. Find items by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find items by name ===" + ln
+                        + "Заявки с именем: " + searchingName + " не найдены" + ln
+                        + "Menu." + ln
+                        + "0. Find items by name" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindByIdTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test"));
+        String searchingId = String.valueOf(one.getId());
+        String[] answer = {"0", searchingId, "1"};
+        Input input = new StubInput(answer);
+        UserAction[] actions = {
+                new FindItemByIdAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu." + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find item by id ===" + ln
+                        + one + ln
+                        + "Menu." + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit program ===" + ln
+        ));
+    }
+
+    @Test
+    public void whenFindByIdTestOutputIsFailure() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+//        Item one = tracker.add(new Item("test"));
+        String searchingId = "1";
+        String[] answer = {"0", searchingId, "1"};
+        Input input = new StubInput(answer);
+        UserAction[] actions = {
+                new FindItemByIdAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu." + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Find item by id ===" + ln
+                        + "Заявка с id: " + searchingId + " не найдена" + ln
+                        + "Menu." + ln
+                        + "0. Find item by id" + ln
+                        + "1. Exit Program" + ln
+                        + "=== Exit program ===" + ln
+        ));
+    }
 }
