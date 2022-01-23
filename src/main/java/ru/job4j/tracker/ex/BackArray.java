@@ -9,8 +9,8 @@ public class BackArray {
         int middle = names.length / 2;
         for (int index = 0; index < middle; index++) {
             String temp = names[index];
-            names[index] = names[middle - index];
-            names[middle] = temp;
+            names[index] = names[names.length - 1 - index];
+            names[names.length - 1 - index] = temp;
         }
         System.out.println(Arrays.toString(names));
     }
