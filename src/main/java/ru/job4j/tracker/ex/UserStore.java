@@ -3,25 +3,19 @@ package ru.job4j.tracker.ex;
 public class UserStore {
 
     public static User findUser(User[] users, String login) throws UserNotFoundException {
-        User rsl = null;
         for (User user : users) {
             if (login.equals(user.getUsername())) {
-                rsl = user;
+                return user;
             }
         }
-        if (rsl != null) {
-            return rsl;
-        } else {
-            throw new UserNotFoundException("User not found");
-        }
+        throw new UserNotFoundException("User not found");
     }
 
     public static boolean validate(User user) throws UserInvalidException {
-        if (user.isValid() && user.getUsername().length() >= 3) {
-            return true;
-        } else {
+        if (!user.isValid() || user.getUsername().length() < 3) {
             throw new UserInvalidException("The user is not valid or username shorter 3 characters");
         }
+        return true;
     }
 
     public static void main(String[] args) {
