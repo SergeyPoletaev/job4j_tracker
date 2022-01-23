@@ -7,13 +7,13 @@ public class FindEl {
         for (int i = 0; i < array.length; i++) {
             if (key.equals(array[i])) {
                 rsl = i;
+                break;
             }
         }
-        if (rsl != -1) {
-            return rsl;
-        } else {
+        if (rsl == -1) {
             throw new ElementNotFoundEx("Element not found");
         }
+        return rsl;
     }
 
     public static void main(String[] args) {
