@@ -7,6 +7,10 @@ import java.util.Set;
 public class NotifyAccount {
 
     public static Set<Account> sent(List<Account> accounts) {
-        return new HashSet<>(accounts);
+        Set<Account> rsl = new HashSet<>(accounts);
+        for (Account account : accounts) {
+            rsl.add(account);
+        }
+        return rsl;
     }
 }
