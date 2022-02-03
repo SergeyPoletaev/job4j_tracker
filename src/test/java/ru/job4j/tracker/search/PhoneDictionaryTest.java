@@ -29,4 +29,64 @@ public class PhoneDictionaryTest {
         ArrayList<Person> persons = phones.find("Petr1");
         Assert.assertTrue(persons.isEmpty());
     }
+
+    @Test
+    public void whenFindBySurname() {
+        PhoneDictionary phones = new PhoneDictionary();
+        phones.add(
+                new Person("Petr", "Arsentev", "534872", "Bryansk")
+        );
+        ArrayList<Person> persons = phones.find("Arsentev");
+        assertThat(persons.get(0).getName(), is("Petr"));
+    }
+
+    @Test
+    public void whenNotFoundBySurname() {
+        PhoneDictionary phones = new PhoneDictionary();
+        phones.add(
+                new Person("Petr", "Arsentev", "534872", "Bryansk")
+        );
+        ArrayList<Person> persons = phones.find("Arsentev1");
+        Assert.assertTrue(persons.isEmpty());
+    }
+
+    @Test
+    public void whenFindByPhone() {
+        PhoneDictionary phones = new PhoneDictionary();
+        phones.add(
+                new Person("Petr", "Arsentev", "534872", "Bryansk")
+        );
+        ArrayList<Person> persons = phones.find("534872");
+        assertThat(persons.get(0).getName(), is("Petr"));
+    }
+
+    @Test
+    public void whenNotFoundByPhone() {
+        PhoneDictionary phones = new PhoneDictionary();
+        phones.add(
+                new Person("Petr", "Arsentev", "534872", "Bryansk")
+        );
+        ArrayList<Person> persons = phones.find("534873");
+        Assert.assertTrue(persons.isEmpty());
+    }
+
+    @Test
+    public void whenFindByAddress() {
+        PhoneDictionary phones = new PhoneDictionary();
+        phones.add(
+                new Person("Petr", "Arsentev", "534872", "Bryansk")
+        );
+        ArrayList<Person> persons = phones.find("Bryansk");
+        assertThat(persons.get(0).getName(), is("Petr"));
+    }
+
+    @Test
+    public void whenNotFoundByAddress() {
+        PhoneDictionary phones = new PhoneDictionary();
+        phones.add(
+                new Person("Petr", "Arsentev", "534872", "Bryansk")
+        );
+        ArrayList<Person> persons = phones.find("Bryansk1");
+        Assert.assertTrue(persons.isEmpty());
+    }
 }
