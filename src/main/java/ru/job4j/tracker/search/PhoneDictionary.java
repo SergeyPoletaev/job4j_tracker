@@ -1,6 +1,7 @@
 package ru.job4j.tracker.search;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class PhoneDictionary {
@@ -10,8 +11,8 @@ public class PhoneDictionary {
         this.persons.add(person);
     }
 
-    public ArrayList<Person> find(String key) {
-        var rsl = new ArrayList<Person>();
+    public List<Person> find(String key) {
+        List<Person> rsl = new ArrayList<>();
         Predicate<Person> predName = p -> p.getName().contains(key);
         Predicate<Person> predSurname = p -> p.getSurname().contains(key);
         Predicate<Person> predPhone = p -> p.getPhone().contains(key);
