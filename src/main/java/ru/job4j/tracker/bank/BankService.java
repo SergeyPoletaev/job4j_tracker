@@ -19,6 +19,7 @@ public class BankService {
 
     /**
      * Метод добавляет нового пользователя в коллекцию при условии, что такого пользователя еще нет.
+     *
      * @param user пользователь, который добавляется в коллекцию.
      */
     public void addUser(User user) {
@@ -27,8 +28,9 @@ public class BankService {
 
     /**
      * Метод добавляет аккаунт к существующему пользователю.
+     *
      * @param passport идентификатор паспорта пользователя.
-     * @param account аккаунт, который добавляется пользователю.
+     * @param account  аккаунт, который добавляется пользователю.
      */
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
@@ -39,24 +41,22 @@ public class BankService {
 
     /**
      * Метод осуществляет поиск пользователя по паспортным данным.
+     *
      * @param passport идентификатор паспорта пользователя.
      * @return при успешном поиске возвращает найденного пользователя, иначе null.
      */
     public User findByPassport(String passport) {
-        User rsl = null;
-        for (User user : users.keySet()) {
-            if (passport.equals(user.getPassport())) {
-                rsl = user;
-                break;
-            }
-        }
-        return rsl;
+        return users.keySet().stream()
+                .filter(u -> passport.equals(u.getPassport()))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
      * Метод осуществляет поиск аккаунта по паспортным данным пользователя и реквизитам аккаунта,
      * связанного с этим пользователем.
-     * @param passport идентификатор паспорта пользователя.
+     *
+     * @param passport  идентификатор паспорта пользователя.
      * @param requisite идентификатор реквизитов аккаунта.
      * @return при успешном поиске возвращает найденный аккаунт, иначе null.
      */
@@ -64,23 +64,22 @@ public class BankService {
         Account rsl = null;
         User user = findByPassport(passport);
         if (user != null) {
-            for (Account account : users.get(user)) {
-                if (requisite.equals(account.getRequisite())) {
-                    rsl = account;
-                    break;
-                }
-            }
+            rsl = users.get(user).stream()
+                    .filter(a -> requisite.equals(a.getRequisite()))
+                    .findFirst()
+                    .orElse(null);
         }
         return rsl;
     }
 
     /**
      * Метод осуществляет перевод денег с одного аккаунта на другой.
-     * @param srcPassport идентификатор паспорта источника.
-     * @param srcRequisite идентификатор реквизитов аккаунта источника.
-     * @param destPassport идентификатор паспорта получателя.
+     *
+     * @param srcPassport   идентификатор паспорта источника.
+     * @param srcRequisite  идентификатор реквизитов аккаунта источника.
+     * @param destPassport  идентификатор паспорта получателя.
      * @param destRequisite идентификатор реквизитов аккаунта получателя.
-     * @param amount сумма перевода.
+     * @param amount        сумма перевода.
      * @return возвращает true в случае успешного выполнения операции перевода, иначе false.
      */
     public boolean transferMoney(String srcPassport, String srcRequisite,
