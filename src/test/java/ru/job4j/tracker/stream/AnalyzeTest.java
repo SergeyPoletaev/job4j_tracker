@@ -5,8 +5,8 @@ import org.junit.Test;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class AnalyzeTest {
 
@@ -17,7 +17,7 @@ public class AnalyzeTest {
                         new Pupil("Ivanov", List.of(new Subject("Math", 100)))
                 )
         );
-        assertThat(average, is(100D));
+        assertThat(average, equalTo(100D));
     }
 
     @Test
@@ -28,7 +28,7 @@ public class AnalyzeTest {
                         new Pupil("Petrov", List.of(new Subject("Math", 60)))
                 )
         );
-        assertThat(average, is(80D));
+        assertThat(average, equalTo(80D));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class AnalyzeTest {
                         new Pupil("Petrov", List.of(new Subject("Math", 60), new Subject("Lang", 60)))
                 )
         );
-        assertThat(average, is(List.of(
+        assertThat(average, equalTo(List.of(
                 new Tuple("Ivanov", 100D),
                 new Tuple("Petrov", 60D)
         )));
@@ -65,7 +65,7 @@ public class AnalyzeTest {
                         )
                 )
         );
-        assertThat(average, is(List.of(
+        assertThat(average, equalTo(List.of(
                 new Tuple("Math", 80D),
                 new Tuple("Lang", 80D),
                 new Tuple("Philosophy", 80D)
@@ -80,7 +80,7 @@ public class AnalyzeTest {
                         new Pupil("Petrov", List.of(new Subject("Math", 60), new Subject("Lang", 60)))
                 )
         );
-        assertThat(best, is(new Tuple("Ivanov", 200D)));
+        assertThat(best, equalTo(new Tuple("Ivanov", 200D)));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class AnalyzeTest {
                         new Pupil("Petrov", List.of(new Subject("Math", 60), new Subject("Lang", 60)))
                 )
         );
-        assertThat(best, is(new Tuple("Math", 160D)));
+        assertThat(best, equalTo(new Tuple("Math", 160D)));
     }
 
 }
