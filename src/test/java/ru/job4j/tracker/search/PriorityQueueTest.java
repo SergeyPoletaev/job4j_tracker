@@ -2,8 +2,8 @@ package ru.job4j.tracker.search;
 
 import org.junit.Test;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class PriorityQueueTest {
 
@@ -14,6 +14,6 @@ public class PriorityQueueTest {
         queue.put(new Task("urgent", 1));
         queue.put(new Task("middle", 3));
         var result = queue.take();
-        assertThat(result.getDesc(), is("urgent"));
+        assertThat(result.getDesc(), equalTo("urgent"));
     }
 }

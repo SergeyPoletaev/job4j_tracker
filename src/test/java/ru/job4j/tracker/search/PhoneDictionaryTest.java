@@ -3,8 +3,8 @@ package ru.job4j.tracker.search;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class PhoneDictionaryTest {
 
@@ -15,7 +15,7 @@ public class PhoneDictionaryTest {
                 new Person("Petr", "Arsentev", "534872", "Bryansk")
         );
         var persons = phones.find("Petr");
-        assertThat(persons.get(0).getSurname(), is("Arsentev"));
+        assertThat(persons.get(0).getSurname(), equalTo("Arsentev"));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class PhoneDictionaryTest {
                 new Person("Petr", "Arsentev", "534872", "Bryansk")
         );
         var persons = phones.find("Arsentev");
-        assertThat(persons.get(0).getName(), is("Petr"));
+        assertThat(persons.get(0).getName(), equalTo("Petr"));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PhoneDictionaryTest {
                 new Person("Petr", "Arsentev", "534872", "Bryansk")
         );
         var persons = phones.find("534872");
-        assertThat(persons.get(0).getName(), is("Petr"));
+        assertThat(persons.get(0).getName(), equalTo("Petr"));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class PhoneDictionaryTest {
                 new Person("Petr", "Arsentev", "534872", "Bryansk")
         );
         var persons = phones.find("Bryansk");
-        assertThat(persons.get(0).getName(), is("Petr"));
+        assertThat(persons.get(0).getName(), equalTo("Petr"));
     }
 
     @Test
