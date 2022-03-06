@@ -18,4 +18,5 @@
 
 
 [![build](https://github.com/SergeyPoletaev/job4j_tracker/workflows/build/badge.svg)](https://github.com/SergeyPoletaev/job4j_tracker/actions)
-[![codecov](https://codecov.io/gh/SergeyPoletaev/job4j_tracker/branch/master/graph/badge.svg?token=5ab684e5-ea3e-4015-bae5-850a78e67cd3)](https://codecov.io/gh/SergeyPoletaev/job4j_tracker)
+[![codecov](https://codecov.io/gh/SergeyPoletaev/job4j_tracker/branch/master/graph/badge.svg?token=REiYOFCzeC)](https://codecov.io/gh/SergeyPoletaev/job4j_tracker)
+
