@@ -16,4 +16,6 @@
 
 1. Производить поиск по имени заявки.
 
+
 [![build](https://github.com/SergeyPoletaev/job4j_tracker/workflows/build/badge.svg)](https://github.com/SergeyPoletaev/job4j_tracker/actions)
+[![codecov](https://codecov.io/gh/SergeyPoletaev/job4j_tracker/branch/master/graph/badge.svg?token=0ea8d249-a3c9-4ab9-b3c7-ccf684d44e53)](https://codecov.io/gh/SergeyPoletaev/job4j_tracker)
