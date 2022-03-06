@@ -15,3 +15,5 @@
 1. Отображать список всех заявок.
 
 1. Производить поиск по имени заявки.
+
+[![build](https://github.com/SergeyPoletaev/job4j_tracker/workflows/build/badge.svg)](https://github.com/SergeyPoletaev/job4j_tracker/actions)
