@@ -83,11 +83,7 @@ public class SqlTracker implements Store, AutoCloseable {
         try (PreparedStatement statement = cn.prepareStatement("select * from items");
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                items.add(new Item(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getTimestamp(3).toLocalDateTime()
-                ));
+                items.add(getItem(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,11 +98,7 @@ public class SqlTracker implements Store, AutoCloseable {
             statement.setString(1, key);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    items.add(new Item(
-                            resultSet.getInt(1),
-                            resultSet.getString(2),
-                            resultSet.getTimestamp(3).toLocalDateTime()
-                    ));
+                    items.add(getItem(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -122,16 +114,20 @@ public class SqlTracker implements Store, AutoCloseable {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    item = new Item(
-                            resultSet.getInt(1),
-                            resultSet.getString(2),
-                            resultSet.getTimestamp(3).toLocalDateTime()
-                    );
+                    item = getItem(resultSet);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return item;
+    }
+
+    private Item getItem(ResultSet resultSet) throws SQLException {
+        return new Item(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getTimestamp(3).toLocalDateTime()
+        );
     }
 }
