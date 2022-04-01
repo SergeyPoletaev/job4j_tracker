@@ -73,31 +73,18 @@ public class SqlTrackerTest {
         Item second = new Item("item2");
         tracker.add(first);
         tracker.add(second);
-        assertThat(tracker.findAll().size(), is(2));
+        assertThat(tracker.findAll(), is(List.of(first, second)));
     }
 
     @Test
-    public void whenTestFindByNameCheckListSize() {
+    public void whenTestFindByName() {
         Store tracker = new SqlTracker(connection);
-        Item first = new Item("item1");
+        tracker.add(new Item("item1"));
         Item second = new Item("item2");
-        tracker.add(first);
+        Item third = new Item("item2");
         tracker.add(second);
-        tracker.add(second);
-        List<Item> rsl = tracker.findByName(second.getName());
-        assertThat(rsl.size(), is(2));
-    }
-
-    @Test
-    public void whenTestFindByNameCheckSecondItemName() {
-        Store tracker = new SqlTracker(connection);
-        Item first = new Item("item1");
-        Item second = new Item("item2");
-        tracker.add(first);
-        tracker.add(second);
-        tracker.add(second);
-        List<Item> rsl = tracker.findByName(second.getName());
-        assertThat(rsl.get(0).getName(), is(second.getName()));
+        tracker.add(third);
+        assertThat(tracker.findByName("item2"), is(List.of(second, third)));
     }
 
     @Test
