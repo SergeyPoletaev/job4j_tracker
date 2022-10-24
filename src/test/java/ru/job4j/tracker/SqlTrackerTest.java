@@ -1,6 +1,9 @@
 package ru.job4j.tracker;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -46,7 +49,6 @@ public class SqlTrackerTest {
         }
     }
 
-    @Ignore
     @Test
     public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
         Store tracker = new SqlTracker(connection);
@@ -55,7 +57,6 @@ public class SqlTrackerTest {
         assertThat(tracker.findById(item.getId()), is(item));
     }
 
-    @Ignore
     @Test
     public void whenTestFindById() {
         Store tracker = new SqlTracker(connection);
@@ -65,7 +66,6 @@ public class SqlTrackerTest {
         assertThat(rsl.getName(), is(item.getName()));
     }
 
-    @Ignore
     @Test
     public void whenTestFindAll() {
         Store tracker = new SqlTracker(connection);
@@ -76,7 +76,6 @@ public class SqlTrackerTest {
         assertThat(tracker.findAll(), is(List.of(first, second)));
     }
 
-    @Ignore
     @Test
     public void whenTestFindByName() {
         Store tracker = new SqlTracker(connection);
@@ -88,7 +87,6 @@ public class SqlTrackerTest {
         assertThat(tracker.findByName("item2"), is(List.of(second, third)));
     }
 
-    @Ignore
     @Test
     public void whenReplace() {
         Store tracker = new SqlTracker(connection);
@@ -99,7 +97,6 @@ public class SqlTrackerTest {
         assertThat(tracker.findById(item.getId()).getName(), is(newItem.getName()));
     }
 
-    @Ignore
     @Test
     public void whenDelete() {
         Store tracker = new SqlTracker(connection);
