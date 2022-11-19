@@ -2,11 +2,15 @@ package ru.job4j.tracker;
 
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class StartUITest {
 
@@ -309,5 +313,122 @@ public class StartUITest {
                                 + "=== Exit program ===" + ln
                 )
         );
+    }
+
+    @Test
+    public void whenExecuteEditActionSuccess() {
+        Output out = new StubOutput();
+        Store tracker = new MemTracker();
+        tracker.add(new Item("Replaced item"));
+        String replacedName = "New item name";
+        UserAction action = new EditAction(out);
+        Input in = mock(Input.class);
+        when(in.askInt(any(String.class))).thenReturn(1);
+        when(in.askStr(any(String.class))).thenReturn(replacedName);
+        action.execute(in, tracker);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("=== Edit item ===" + ln + "Заявка изменена успешно" + ln));
+        assertThat(tracker.findAll().get(0).getName(), is(replacedName));
+    }
+
+    @Test
+    public void whenExecuteEditActionFail() {
+        Output out = new StubOutput();
+        Store tracker = new MemTracker();
+        String replacedName = "Replaced item";
+        tracker.add(new Item(replacedName));
+        UserAction action = new EditAction(out);
+        Input in = mock(Input.class);
+        action.execute(in, tracker);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("=== Edit item ===" + ln + "Ошибка замены заявки" + ln));
+        assertThat(tracker.findAll().get(0).getName(), is(replacedName));
+    }
+
+    @Test
+    public void whenExecuteDeleteActionSuccess() {
+        Output out = new StubOutput();
+        Store tracker = new MemTracker();
+        tracker.add(new Item("Deleted Item"));
+        UserAction action = new DeleteAction(out);
+        Input in = mock(Input.class);
+        when(in.askInt(any(String.class))).thenReturn(1);
+        action.execute(in, tracker);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("=== Delete item ===" + ln + "Заявка удалена успешно" + ln));
+        assertThat(tracker.findAll(), is(Collections.EMPTY_LIST));
+    }
+
+    @Test
+    public void whenExecuteDeleteActionFail() {
+        Output out = new StubOutput();
+        Store tracker = new MemTracker();
+        tracker.add(new Item("Deleted Item"));
+        UserAction action = new DeleteAction(out);
+        Input in = mock(Input.class);
+        action.execute(in, tracker);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("=== Delete item ===" + ln + "Ошибка удаления заявки" + ln));
+        assertThat(tracker.findAll().get(0).getName(), is("Deleted Item"));
+    }
+
+    @Test
+    public void whenExecuteFindItemByIdActionSuccess() {
+        Output out = new StubOutput();
+        Store tracker = new MemTracker();
+        Item item = new Item("new Item");
+        tracker.add(item);
+        UserAction action = new FindItemByIdAction(out);
+        Input in = mock(Input.class);
+        when(in.askInt(any(String.class))).thenReturn(1);
+        action.execute(in, tracker);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("=== Find item by id ===" + ln + item + ln));
+        assertThat(tracker.findById(1).getName(), is("new Item"));
+    }
+
+    @Test
+    public void whenExecuteFindItemByIdActionFail() {
+        Output out = new StubOutput();
+        Store tracker = new MemTracker();
+        Item item = new Item("new Item");
+        tracker.add(item);
+        UserAction action = new FindItemByIdAction(out);
+        Input in = mock(Input.class);
+        action.execute(in, tracker);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("=== Find item by id ===" + ln + "Заявка с id: 0 не найдена" + ln));
+        assertThat(tracker.findById(0), is(nullValue()));
+    }
+
+    @Test
+    public void whenExecuteFindItemByNameActionSuccess() {
+        Output out = new StubOutput();
+        Store tracker = new MemTracker();
+        Item item = new Item("new Item");
+        tracker.add(item);
+        UserAction action = new FindItemsByNameAction(out);
+        Input in = mock(Input.class);
+        when(in.askStr(any(String.class))).thenReturn(item.getName());
+        action.execute(in, tracker);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("=== Find items by name ===" + ln + item + ln));
+        assertThat(tracker.findByName(item.getName()), is(List.of(item)));
+    }
+
+    @Test
+    public void whenExecuteFindItemByNameActionFail() {
+        Output out = new StubOutput();
+        Store tracker = new MemTracker();
+        Item item = new Item("new Item");
+        tracker.add(item);
+        UserAction action = new FindItemsByNameAction(out);
+        Input in = mock(Input.class);
+        String searchName = "Item";
+        when(in.askStr(any(String.class))).thenReturn(searchName);
+        action.execute(in, tracker);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("=== Find items by name ===" + ln + "Заявки с именем: " + searchName + " не найдены" + ln));
+        assertThat(tracker.findByName(searchName), is(Collections.EMPTY_LIST));
     }
 }
