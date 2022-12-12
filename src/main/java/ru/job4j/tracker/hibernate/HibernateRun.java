@@ -11,8 +11,7 @@ import java.util.List;
 
 public class HibernateRun {
     public static void main(String[] args) {
-        final StandardServiceRegistry registry =
-                new StandardServiceRegistryBuilder().configure().build();
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         try {
             SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
             Item item = new Item();
