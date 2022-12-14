@@ -12,6 +12,8 @@ public class HbmTracker implements Store, AutoCloseable {
     private static final String FROM_ITEM = "from Item";
     private static final String FROM_ITEM_WHERE_NAME = "from Item where name = :key";
     private static final String FROM_ITEM_WHERE_ID = "from Item where id = :id";
+    private static final String DELETE_FROM_ITEM = "delete from Item where id = :id";
+    private static final String UPDATE_ITEM = "update Item set name = :name, created = :created where id = :id";
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
     private final SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
 
@@ -31,16 +33,20 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public boolean replace(int id, Item item) {
-        boolean rsl = true;
+        boolean rsl = false;
         Session session = sf.openSession();
         try {
             session.beginTransaction();
             item.setId(id);
             session.update(item);
+            rsl = session.createQuery(UPDATE_ITEM)
+                    .setParameter("name", item.getName())
+                    .setParameter("created", item.getCreated())
+                    .setParameter("id", id)
+                    .executeUpdate() > 0;
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
-            rsl = false;
         }
         session.close();
         return rsl;
@@ -48,17 +54,16 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public boolean delete(int id) {
-        boolean rsl = true;
+        boolean rsl = false;
         Session session = sf.openSession();
         try {
             session.beginTransaction();
-            Item item = new Item();
-            item.setId(id);
-            session.delete(item);
+            rsl = session.createQuery(DELETE_FROM_ITEM)
+                    .setParameter("id", id)
+                    .executeUpdate() > 0;
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
-            rsl = false;
         }
         session.close();
         return rsl;
