@@ -1,17 +1,18 @@
 package ru.job4j.tracker;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "items")
 public class Item {
@@ -20,16 +21,27 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @EqualsAndHashCode.Exclude
     private LocalDateTime created = LocalDateTime.now();
+    @ManyToMany
+    @JoinTable(
+            name = "participates",
+            joinColumns = {@JoinColumn(name = "item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private List<User> participates;
 
     public Item(String name) {
         this.name = name;
     }
 
     public Item(int id, String name) {
+        this(name);
         this.id = id;
-        this.name = name;
+    }
+
+    public Item(int id, String name, LocalDateTime created) {
+        this(id, name);
+        this.created = created;
     }
 
     @Override
@@ -39,5 +51,22 @@ public class Item {
                 + ", name='" + name
                 + ", created='" + '\'' + created.format(FORMATTER) + '\''
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Item item = (Item) o;
+        return id == item.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
